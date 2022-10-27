@@ -5,7 +5,7 @@ import { View, Text } from 'react-native'
 export default function App() {
   return (
     <NavigationContainer>
-      <Text>Hello World</Text>
+      <Text>Hello Worlds</Text>
     </NavigationContainer>
   )
 }
