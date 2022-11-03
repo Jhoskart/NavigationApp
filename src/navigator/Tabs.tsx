@@ -2,6 +2,7 @@ import react from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { Text, Platform } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 import Tab1Screen from '../screens/Tab1Screen';
 import Tab2Screen from '../screens/Tab2Screen';
 import StackNavigator from './StackNavigator';
@@ -21,11 +22,23 @@ const TabsAndroid = () => {
             barStyle={{
                 backgroundColor: colores.primary
             }}
-            screenOptions={{
+            screenOptions={({ route }) => ({
                 tabBarIcon: ({ color, focused }) => {
-                    return <Text style={{ color }}>{focused ? '🔥' : '🌶'}</Text>
+                    let iconName: string = '';
+                    switch (route.name) {
+                        case 'Tab1Screen':
+                            focused ? iconName = 'bandage-sharp' : iconName = 'bandage-outline';
+                            break;
+                        case 'Tab2Screen':
+                            focused ? iconName = 'basketball-sharp' : iconName = 'basketball-outline';
+                            break;
+                        case 'StackNavigator':
+                            focused ? iconName = 'bookmarks-sharp' : iconName = 'bookmarks-outline';
+                            break;
+                        }
+                    return <Icon name={iconName} size={20} color={color} />
                 }
-            }}
+            })}
         >
             <materialTab.Screen name='Tab1Screen' options={{ title: "Tab1" }} component={ Tab1Screen } />
             <materialTab.Screen name='Tab2Screen' options={{ title: "Tab2" }} component={ TopTabNavigator } />
@@ -42,7 +55,7 @@ const TabsIOS = () => {
             sceneContainerStyle={{
                 backgroundColor: 'white'
             }}
-            screenOptions={{
+            screenOptions={({ route }) => ({
                 headerShown: false,
                 tabBarActiveTintColor: colores.primary,
                 tabBarStyle: {
@@ -56,9 +69,21 @@ const TabsIOS = () => {
                     fontSize: 15,
                 },
                 tabBarIcon: ({ color, focused }) => {
-                    return <Text style={{ color }}>{focused ? '🔥' : '🌶'}</Text>
+                    let iconName: string = '';
+                    switch (route.name) {
+                        case 'Tab1Screen':
+                            focused ? iconName = 'bandage-sharp' : iconName = 'bandage-outline';
+                            break;
+                        case 'Tab2Screen':
+                            focused ? iconName = 'basketball-sharp' : iconName = 'basketball-outline';
+                            break;
+                        case 'StackNavigator':
+                            focused ? iconName = 'bookmarks-sharp' : iconName = 'bookmarks-outline';
+                            break;
+                        }
+                    return <Icon name={iconName} size={20} color={color} />
                 }
-            }}
+            })}
         >
         {/* <Tab.Screen name='Tab1Screen' options={{ title: "Tab1", tabBarIcon: (props) => <Text style={{ color: props.color }}>T1</Text> }} component={ Tab1Screen } /> */}
         <Screen name='Tab1Screen' options={{ title: "Tab1" }} component={ Tab1Screen } />

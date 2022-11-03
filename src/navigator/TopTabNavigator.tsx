@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, Platform } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import Icon from 'react-native-vector-icons/Ionicons';
 import AlbumsScreen from '../screens/AlbumsScreen';
 import ChatScreen from '../screens/ChatScreen';
 import ContactScreen from '../screens/ContactScreen';
@@ -14,9 +15,21 @@ export const TopTabNavigator = () => {
             sceneContainerStyle={{
                 backgroundColor: 'white',
             }}
-            screenOptions={{
+            screenOptions={ ({ route }) => ({
                 tabBarIcon: ({ color }) => {
-                    return <Text style={{ color }}>{'🔥'}</Text>
+                    let iconName: string = '';
+                    switch (route.name) {
+                        case 'AlbumsScreen':
+                            iconName = 'albums-outline';
+                            break;
+                        case 'ChatScreen':
+                            iconName = 'chatbox-outline';
+                            break;
+                        case 'ContactScreen':
+                            iconName = 'people-outline';
+                            break;
+                    }
+                    return <Icon name={iconName} size={20} color={color} />
                 },
                 tabBarActiveTintColor: colores.primary,
                 tabBarPressColor: colores.primary,
@@ -31,7 +44,7 @@ export const TopTabNavigator = () => {
                     fontSize: 10
                 },
                 tabBarShowIcon: true,
-            }}
+            })}
             
         >
             <Tab.Screen name="AlbumsScreen" options={{ title: 'Album' }} component={AlbumsScreen} />

@@ -49,6 +49,8 @@ export const styles = StyleSheet.create({
         marginVertical: 10
     },
     menuTexto: {
-        fontSize: 20
+        fontSize: 20,
+        marginLeft: 10,
+        color: 'white'
     }
 });
