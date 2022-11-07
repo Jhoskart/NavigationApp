@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useReducer } from "react";
 import { createContext, useState } from "react";
+import { authReducer } from "./authReducer";
 
 
 //Definir como luce, que informacion tendre aqui
@@ -23,9 +24,9 @@ export const authInitialState: AuthState = {
 export interface AuthContextProps {
     authState: AuthState;
     signIn: () => void;
-    changeFavoriteIcon: (iconName: string) => void;
     logout: () => void;
-    signInWithUsername: (username: string) => void;
+    changeFavoriteIcon: (iconName: string) => void;
+    changeUsername: (username: string) => void;
 }
 
 // Crear el contexto
@@ -36,38 +37,22 @@ export const AuthContext = createContext( {} as AuthContextProps);
 
 export const AuthProvider = ({ children }: any) => {
     
-        const [authState, setAuthState] = useState(authInitialState);
-    
+        const [authState, dispatch] = useReducer(authReducer, authInitialState);
+
         const signIn = () => {
-            setAuthState({
-                ...authState,
-                isLoggedIn: true,
-                username: 'no-username-yet'
-            });
+            dispatch({ type: 'signIn' });
         }
-    
-        const signInWithUsername = (username: string) => {
-            setAuthState({
-                ...authState,
-                isLoggedIn: true,
-                username
-            });
-        }
-    
-        const changeFavoriteIcon = (iconName: string) => {
-            setAuthState({
-                ...authState,
-                favoriteIcon: iconName
-            });
-        }
-    
+
         const logout = () => {
-            setAuthState({
-                ...authState,
-                isLoggedIn: false,
-                username: undefined,
-                favoriteIcon: undefined
-            });
+            dispatch({ type: 'logout' });
+        }
+
+        const changeFavoriteIcon = (iconName: string) => {
+            dispatch({ type: 'changeFavIcon', payload: iconName });
+        }
+
+        const changeUsername = (username: string) => {
+            dispatch({ type: 'changeUsername', payload: username });
         }
     
         return (
@@ -76,7 +61,7 @@ export const AuthProvider = ({ children }: any) => {
                 signIn,
                 changeFavoriteIcon,
                 logout,
-                signInWithUsername
+                changeUsername
             }}>
                 { children }
             </AuthContext.Provider>
