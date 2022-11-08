@@ -27,7 +27,7 @@ const PersonaScreen = ({ route, navigation }: Props) => {
     }, [])
 
     useEffect(() => {
-        changeUsername(params.nombre);
+        changeUsername(params.nombre)
     }, [])
 
 
